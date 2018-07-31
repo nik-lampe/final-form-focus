@@ -28,22 +28,27 @@ var getAllInputs = function getAllInputs() {
 
 //
 
-var defaultFindInput = function defaultFindInput(inputs, errors) {
+/**
+ * Finds the input by looking if the name attribute path is existing in the errors object
+ */
+var findInput = function findInput(inputs, errors) {
   return inputs.find(function(input) {
     return input.name && getIn(errors, input.name)
   })
 }
 
-var createDecorator = function createDecorator(getInputs, findInput) {
+//
+
+var createDecorator = function createDecorator(getInputs, findInput$$1) {
   return function(form) {
     var focusOnFirstError = function focusOnFirstError(errors) {
       if (!getInputs) {
         getInputs = getAllInputs
       }
-      if (!findInput) {
-        findInput = defaultFindInput
+      if (!findInput$$1) {
+        findInput$$1 = findInput
       }
-      var firstInput = findInput(getInputs(), errors)
+      var firstInput = findInput$$1(getInputs(), errors)
       if (firstInput) {
         firstInput.focus()
       }
